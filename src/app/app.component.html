@@ -1,0 +1,93 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+	<img width="40"
+		 alt="Angular Logo"
+		 src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
+	<span>{{ title }}</span>
+	<div class="spacer"></div>
+</div>
+
+<div class="content" role="main">
+	<table datatable class="table table-bordered table-striped table-hover" [dtOptions]="dtOptions">
+		<thead>
+			<tr>
+				<th>FirstName</th>
+				<th>LastName</th>
+				<th>Email</th>
+				<th>Role</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let user of allUsers">
+				<td>{{ user.firstName }}</td>
+				<td>{{ user.lastName }}</td>
+				<td>{{ user.emailId }}</td>
+				<td>{{ getUserRole(user.role) }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="btn-container">
+	<button type="button" class="btn btn-primary" (click)="showModal()">New User</button>
+</div>
+
+<ng-template #addUserModal>
+	<form ngNativeValidate id="add-user-form">
+		<div class="modal-header">
+			<h5 class="modal-title pull-left">Add new user</h5>
+		</div>
+		<div class="modal-body">
+			<div class="form-group row">
+				<div class="col-lg-12">
+					<label for="firstName">First name</label>
+					<input type="text" id="firstName" class="form-control" name="firstName"
+						   [(ngModel)]="firstName"
+						   placeholder="First name"
+						   autocomplete="off" required
+						   [disabled]="isUserFormSubmitted" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-lg-12">
+					<label for="lastName">Last name</label>
+					<input type="text" id="lastName" class="form-control" name="lastName"
+						   [(ngModel)]="lastName"
+						   placeholder="Last name"
+						   autocomplete="off" required
+						   [disabled]="isUserFormSubmitted" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-lg-12">
+					<label for="emailId">Email</label>
+					<input type="email" id="emailId" class="form-control" name="emailId"
+						   [(ngModel)]="emailId"
+						   placeholder="Email"
+						   autocomplete="off" required
+						   [disabled]="isUserFormSubmitted" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-lg-12">
+					<label>Role</label>
+					<br />
+					<label class="radio-inline">
+						<input type="radio" [(ngModel)]="userRole" [value]="0" name="userRole" checked>Super Admin
+					</label>
+					<label class="radio-inline">
+						<input type="radio" [(ngModel)]="userRole" [value]="1" name="userRole">Admin
+					</label>
+					<label class="radio-inline">
+						<input type="radio" [(ngModel)]="userRole" [value]="2" name="userRole">User
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-danger" [disabled]="isUserFormSubmitted" (click)="closeModal()">Cancel</button>
+			<button type="button" class="btn btn-primary" [disabled]="isUserFormSubmitted" (click)="addNewUser()">Add</button>
+			<input type="submit" id="submit-add-user" style="display: none" />
+		</div>
+	</form>
+</ng-template>
